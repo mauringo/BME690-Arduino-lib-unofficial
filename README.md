@@ -1,4 +1,4 @@
-# BME690_unofficial
+# BME690-Arduino-lib-unofficial
 
 Unofficial Arduino framework library maintained by **Mauro Riboni** ([@mauringo](https://github.com/mauringo), 58341265+mauringo@users.noreply.github.com).
 
@@ -12,11 +12,11 @@ Bosch Sensortec remains the author of the original libraries. Original copyright
 
 ## Start with the generic I2C example
 
-In Arduino IDE choose **File → Examples → BME690_unofficial → generic_i2c**. This is the recommended first example. It explains every setup step and prints temperature (°C), pressure (Pa), relative humidity (%), gas resistance (Ω), and whether the gas reading is valid.
+In Arduino IDE choose **File → Examples → BME690-Arduino-lib-unofficial → generic_i2c**. This is the recommended first example. It explains every setup step and prints temperature (°C), pressure (Pa), relative humidity (%), gas resistance (Ω), and whether the gas reading is valid.
 
 ## Install
 
-Clone or copy this repository directly to `<your Arduino sketchbook>/libraries/BME690_unofficial`, then restart Arduino IDE. The root contains `library.properties`, `src/` and `examples/`; do not use the old nested `BME69x_Sensor_library` folder. No proprietary binary or extra Arduino library is needed for raw readings.
+Clone or copy this repository directly to `<your Arduino sketchbook>/libraries/BME690-Arduino-lib-unofficial`, then restart Arduino IDE. The root contains `library.properties`, `src/` and `examples/`; do not use the old nested `BME69x_Sensor_library` folder. No proprietary binary or extra Arduino library is needed for raw readings.
 
 For PlatformIO:
 
@@ -65,11 +65,11 @@ Negative `sensor.status` values are errors; positive values are warnings. If ini
 - `forced_mode_i2c_custompins`: compact Polverine example with GPIO14/GPIO21.
 - `forced_mode`: SPI example; use your board's SPI pins and a suitable chip-select.
 
-For IAQ install [BSEC3_unofficial](https://github.com/mauringo/Bsec3-ArduinoLibrary-Unofficial). For both sensors, BlackIoT compensation tables and Serial JSON, see [Polverine Arduino Examples](https://github.com/mauringo/Polverine_Arduino_Examples) and [its Arduino IDE sketch](https://github.com/mauringo/Polverine_Arduino_Examples/tree/main/Arduino_project).
+For IAQ install [Bsec3-ArduinoLibrary-Unofficial](https://github.com/mauringo/Bsec3-ArduinoLibrary-Unofficial). For both sensors, BlackIoT compensation tables and Serial JSON, see [Polverine Arduino Examples](https://github.com/mauringo/Polverine_Arduino_Examples) and [its Arduino IDE sketch](https://github.com/mauringo/Polverine_Arduino_Examples/tree/main/Arduino_project).
 
-## Version 1.4.1
+## Version 0.0.1
 
-Adds the commented generic I2C example, clearer setup instructions and project links. Fixes heater waiting in raw examples and keeps a bounded Serial wait. The raw Arduino driver has no Bosch algorithm binary dependency. Compilation checks are documented with the release; physical communication and measurement quality still require hardware validation.
+Initial version under the repository-matching library name. Includes the generic I2C example, setup instructions, corrected heater waiting, and bounded Serial wait. The raw Arduino driver has no Bosch algorithm binary dependency. Physical communication and measurement quality still require hardware validation.
 
 Pin API references: [Espressif Arduino I2C](https://docs.espressif.com/projects/arduino-esp32/en/latest/api/i2c.html), [Arduino Wire.begin](https://docs.arduino.cc/language-reference/en/functions/communication/wire/begin/).
 

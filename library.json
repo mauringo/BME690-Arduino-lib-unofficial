@@ -1,6 +1,6 @@
 {
-  "name": "BME690_unofficial",
-  "version": "1.4.1",
+  "name": "BME690-Arduino-lib-unofficial",
+  "version": "0.0.1",
   "description": "Unofficial Arduino driver for the Bosch BME690 environmental sensor. Personal hobby work by Mauro Riboni (@mauringo), made for fun and learning. Adapted from the official Bosch Sensortec BME68x Arduino library; unofficial and not affiliated with, endorsed, or supported by Bosch. Original licenses and attribution are retained.",
   "repository": {
     "type": "git",
