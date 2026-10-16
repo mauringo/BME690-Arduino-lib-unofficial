@@ -544,18 +544,17 @@ int8_t bme69xSpiWrite(uint8_t regAddr, const uint8_t *regData,
         comm = (bme69xScommT *) intfPtr;
 
         if (comm->spi.spiobj) {
+            comm->spi.spiobj->beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));
             digitalWrite(comm->spi.cs, LOW);
 
             comm->spi.spiobj->transfer(regAddr);
-#ifdef BME69X_BURST_SPI_TRANSFER
-            comm->spi.spiobj->transfer((uint8_t *)regData, length);
-#else
+            // Writes must not overwrite the caller's const buffer with received bytes.
             for(uint32_t i = 0; i < length; i++) {
                 comm->spi.spiobj->transfer(regData[i]);
             }
-#endif
 
             digitalWrite(comm->spi.cs, HIGH);
+            comm->spi.spiobj->endTransaction();
         } else {
             return BME69X_E_NULL_PTR;
         }
@@ -577,6 +576,7 @@ int8_t bme69xSpiRead(uint8_t regAddr, uint8_t *regData, uint32_t length,
         comm = (bme69xScommT *) intfPtr;
 
         if (comm->spi.spiobj) {
+            comm->spi.spiobj->beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));
             digitalWrite(comm->spi.cs, LOW);
 
             comm->spi.spiobj->transfer(regAddr);
@@ -590,6 +590,7 @@ int8_t bme69xSpiRead(uint8_t regAddr, uint8_t *regData, uint32_t length,
 #endif
 
             digitalWrite(comm->spi.cs, HIGH);
+            comm->spi.spiobj->endTransaction();
         } else {
             return BME69X_E_NULL_PTR;
         }
@@ -657,8 +658,8 @@ int8_t bme69xI2cRead(uint8_t regAddr, uint8_t *regData, uint32_t length,
             if (comm->i2c.wireobj->endTransmission()) {
                 return BME69X_E_COM_FAIL;
             }
-            comm->i2c.wireobj->requestFrom((int) comm->i2c.i2cAddr,
-                    (int) length);
+            if (comm->i2c.wireobj->requestFrom((int) comm->i2c.i2cAddr,
+                    (int) length) != length) return BME69X_E_COM_FAIL;
             for (i = 0; (i < length) && comm->i2c.wireobj->available(); i++) {
                 regData[i] = comm->i2c.wireobj->read();
             }
