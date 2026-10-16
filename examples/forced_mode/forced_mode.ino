@@ -5,6 +5,13 @@
  * 
  */
 
+// Mauro Riboni (@mauringo): personal hobby work, made for fun and learning.
+// Unofficial; not affiliated with, endorsed by, or supported by Bosch.
+
+
+// Complete Polverine Arduino + PlatformIO examples, profiles and compensation:
+// https://github.com/mauringo/Polverine_Arduino_Examples
+
 #include "Arduino.h"
 #include "bme69xLibrary.h"
 
@@ -13,6 +20,7 @@
 #endif
 
 Bme69x bme;
+bool ready = false;
 
 /**
  * @brief Initializes the sensor and hardware settings
@@ -22,7 +30,8 @@ void setup(void)
 	SPI.begin();
 	Serial.begin(115200);
 	
-	while (!Serial)
+	const uint32_t serialStarted = millis();
+	while (!Serial && millis() - serialStarted < 3000)
 		delay(10);
 		
 	/* initializes the sensor based on SPI library */
@@ -43,19 +52,22 @@ void setup(void)
 	
 	/* Set the default configuration for temperature, pressure and humidity */
 	bme.setTPH();
+	if (bme.status < BME69X_OK) { Serial.println(bme.statusString()); return; }
 
 	/* Set the heater configuration to 300 deg C for 100ms for Forced mode */
 	bme.setHeaterProf(300, 100);
 
+	ready = bme.status >= BME69X_OK;
 	Serial.println("TimeStamp(ms), Temperature(deg C), Pressure(Pa), Humidity(%), Gas resistance(ohm), Status");
 }
 
 void loop(void)
 {
+	if (!ready) { delay(1000); return; }
 	bme69xData data;
 
 	bme.setOpMode(BME69X_FORCED_MODE);
-	delayMicroseconds(bme.getMeasDur());
+	delay((bme.getMeasDur() + 999) / 1000 + 100); // T/P/H + 100 ms heater
 
 	if (bme.fetchData())
 	{

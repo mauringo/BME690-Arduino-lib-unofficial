@@ -3,6 +3,14 @@
  * Modifications (C) 2026 Mauro Riboni
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
+// Mauro Riboni (@mauringo): personal hobby work, made for fun and learning.
+// Unofficial; not affiliated with, endorsed by, or supported by Bosch.
+
+
+// Complete Polverine Arduino + PlatformIO examples, profiles and compensation:
+// https://github.com/mauringo/Polverine_Arduino_Examples
+
 #include <Wire.h>
 #include <bme69xLibrary.h>
 Bme69x sensor;
@@ -15,13 +23,14 @@ void setup() {
     sensor.begin(BME69X_I2C_ADDR_LOW, Wire);
     if (sensor.status < BME69X_OK) { Serial.println(sensor.statusString()); return; }
     sensor.setTPH();
+    if (sensor.status < BME69X_OK) { Serial.println(sensor.statusString()); return; }
     sensor.setHeaterProf(300, 100);
     ready = sensor.status >= BME69X_OK;
 }
 void loop() {
     if (!ready) { delay(1000); return; }
     sensor.setOpMode(BME69X_FORCED_MODE);
-    delay((sensor.getMeasDur() + 999) / 1000);
+    delay((sensor.getMeasDur() + 999) / 1000 + 100); // Include the 100 ms heater
     bme69xData data;
     if (sensor.fetchData()) {
         sensor.getData(data);
