@@ -2,7 +2,13 @@
 
 Unofficial Arduino framework library maintained by **Mauro Riboni** ([@mauringo](https://github.com/mauringo), 58341265+mauringo@users.noreply.github.com).
 
-Based on the Bosch Sensortec Arduino BME68x wrapper and BME69x SensorAPI. Bosch copyright notices and licenses are retained. This project is independent of Bosch Sensortec.
+## Origin and personal-project disclaimer
+
+This library started from the official [Bosch Sensortec BME68x Arduino library](https://github.com/boschsensortec/Bosch-BME68x-Library) and was adapted by **Mauro Riboni (@mauringo)** for BME690.
+
+**This is my personal hobby project, made privately for fun and learning.** It is shared as unofficial experimental work, not as an official Bosch product. I am not affiliated with Bosch Sensortec, and this project is not endorsed, certified, or supported by Bosch. No promise of reliability, fitness for a particular purpose, continued maintenance, or support is made; use it at your own risk under the applicable licenses.
+
+Bosch Sensortec remains the author of the original libraries. Original copyright notices and licenses are retained; my changes do not imply ownership of Bosch's work.
 
 ## Install
 
